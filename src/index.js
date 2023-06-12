@@ -5,9 +5,8 @@ const increaseTempButton = document.querySelector('#increaseTempControl');
 const decreaseTempButton = document.querySelector('#decreaseTempControl');
 const tempValue = document.querySelector('#tempValue');
 const landscape = document.querySelector('#landscape');
-const cityNameInput = document.querySelector('#cityNameInput');
-const headerCityName = document.querySelector('#headerCityName');
 const currentTempButton = document.querySelector('#currentTempButton');
+const cityNameInput = document.querySelector('#cityNameInput');
 const BASE_URL = 'http://127.0.0.1:5000';
 
 // Makes functions to run when events occur
@@ -28,7 +27,7 @@ const getLatAndLong = () => {
 			params: {
 				// key: process.env['LOCATION_KEY'],
 				// q: 'Seattle, Washington, USA',
-				q: 'South Lake Tahoe',
+				q: state.city,
 			},
 		})
 		.then((response) => {
@@ -63,6 +62,11 @@ const getWeather = () => {
 };
 
 // Sets the temperate value to state
+const updateCityName = () => {
+	const headerCityName = document.querySelector('#headerCityName');
+	state.city = cityNameInput.value;
+	headerCityName.textContent = state.city;
+};
 const updateTemp = () => {
 	tempValue.textContent = `${state.temp}`;
 };
@@ -108,12 +112,9 @@ const decreaseTemp = () => {
 	updateLandscape();
 };
 
-const updateHeaderCityName = () => {
-	headerCityName.textContent = cityNameInput.value;
-};
-
+updateCityName();
 // Registers functions as 'event listeners'
 increaseTempButton.addEventListener('click', increaseTemp);
 decreaseTempButton.addEventListener('click', decreaseTemp);
-cityNameInput.addEventListener('input', updateHeaderCityName);
+cityNameInput.addEventListener('input', updateCityName);
 currentTempButton.addEventListener('click', getLatAndLong);
