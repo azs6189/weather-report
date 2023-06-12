@@ -5,6 +5,7 @@ const increaseTempButton = document.querySelector('#increaseTempControl');
 const decreaseTempButton = document.querySelector('#decreaseTempControl');
 const tempValue = document.querySelector('#tempValue');
 const landscape = document.querySelector('#landscape');
+const skySelect = document.querySelector('#skySelect');
 const currentTempButton = document.querySelector('#currentTempButton');
 const cityNameInput = document.querySelector('#cityNameInput');
 const BASE_URL = 'http://127.0.0.1:5000';
@@ -67,6 +68,7 @@ const updateCityName = () => {
 	state.city = cityNameInput.value;
 	headerCityName.textContent = state.city;
 };
+
 const updateTemp = () => {
 	tempValue.textContent = `${state.temp}`;
 };
@@ -98,6 +100,30 @@ const updateLandscape = () => {
 	}
 };
 
+const updateSky = () => {
+	const skySelect = document.querySelector('#skySelect').value;
+	const skyContainer = document.querySelector('#sky');
+	let sky = '';
+	let skyColor = '';
+
+	if (skySelect === 'Sunny') {
+		sky = '☁️ ☁️ ☁️ ☀️ ☁️ ☁️';
+		skyColor = 'sunny';
+	} else if (skySelect === 'Cloudy') {
+		sky = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
+		skyColor = 'cloudy';
+	} else if (skySelect === 'Rainy') {
+		sky = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
+		skyColor = 'rainy';
+	} else if (skySelect === 'Snowy') {
+		sky = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
+		skyColor = 'snowy';
+	}
+	skyContainer.textContent = sky;
+	const gardenContent = document.querySelector('#gardenContent');
+	gardenContent.classList = `garden__content ${skyColor}`;
+};
+
 const increaseTemp = () => {
 	state.temp += 1;
 	updateTemp();
@@ -113,8 +139,11 @@ const decreaseTemp = () => {
 };
 
 updateCityName();
+
 // Registers functions as 'event listeners'
 increaseTempButton.addEventListener('click', increaseTemp);
 decreaseTempButton.addEventListener('click', decreaseTemp);
 cityNameInput.addEventListener('input', updateCityName);
 currentTempButton.addEventListener('click', getLatAndLong);
+updateSky();
+skySelect.addEventListener('change', updateSky);
