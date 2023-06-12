@@ -1,5 +1,7 @@
 'use strict';
 
+// const { default: axios } = require('axios');
+
 // Selects the HTML Elements the events will occur on
 const increaseTempButton = document.querySelector('#increaseTempControl');
 const decreaseTempButton = document.querySelector('#decreaseTempControl');
@@ -7,6 +9,35 @@ const tempValue = document.querySelector('#tempValue');
 const landscape = document.querySelector('#landscape');
 const textInput = document.querySelector('#cityNameInput');
 const cityName = document.querySelector('#headerCityName');
+const currentTempButton = document.querySelector('#currentTempButton');
+const BASE_URL = 'http://127.0.0.1:5000';
+
+// Location
+const locationState = {
+	city: 'South Lake Tahoe',
+	lat: 38.9332411,
+	lon: -119.9843482,
+	temp: 60,
+};
+
+const getLatAndLong = () => {
+	axios
+		.get(`${BASE_URL}/location`, {
+			params: {
+				// key: process.env['LOCATION_KEY'],
+				// q: 'Seattle, Washington, USA',
+				q: 'South Lake Tahoe, CA',
+			},
+		})
+		.then((response) => {
+			console.log('success!', response.data);
+			locationState.lat = response.data[0].lat;
+			locationState.lon = response.data[0].lon;
+		})
+		.catch((error) => {
+			console.log('error!', error.response.data);
+		});
+};
 
 // Makes functions to run when events occur
 const state = {
@@ -67,3 +98,4 @@ const updateCityName = () => {
 increaseTempButton.addEventListener('click', increaseTemp);
 decreaseTempButton.addEventListener('click', decreaseTemp);
 textInput.addEventListener('input', updateCityName);
+currentTempButton.addEventListener('click', getLatAndLong);
