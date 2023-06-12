@@ -152,5 +152,4 @@ decreaseTempButton.addEventListener('click', decreaseTemp);
 cityNameInput.addEventListener('input', updateCityName);
 currentTempButton.addEventListener('click', getLatAndLong);
 updateSky();
-skySelect.addEventListener('change', updateSky);
-cityNameReset.addEventListener('click', resetCityName);
+
