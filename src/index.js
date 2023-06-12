@@ -138,6 +138,12 @@ const decreaseTemp = () => {
 	updateLandscape();
 };
 
+const resetCityName = () => {
+	const cityNameResetButton = document.querySelector('#cityNameReset');
+	cityNameInput.value = 'South Lake Tahoe';
+	updateCityName();
+};
+
 updateCityName();
 
 // Registers functions as 'event listeners'
@@ -147,3 +153,4 @@ cityNameInput.addEventListener('input', updateCityName);
 currentTempButton.addEventListener('click', getLatAndLong);
 updateSky();
 skySelect.addEventListener('change', updateSky);
+cityNameReset.addEventListener('click', resetCityName);
